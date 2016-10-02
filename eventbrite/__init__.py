@@ -57,7 +57,7 @@ class API:
         if hasattr(self, 'user_key'):
             args['user'] = self.user
             args['user_key'] = self.user_key
-        args = urllib.urlencode(args)
+        args = urllib.parse.urlencode(args)
         url = "https://%s/json/%s?%s" % (self.server, method, args)
 
         # Make the request
