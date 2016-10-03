@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Django Eventbrite',
-    version='0.0.2',
+    version='0.0.3',
     author='Caktus Consulting Group',
     author_email='solutions@caktusgroup.com',
     packages=find_packages(),

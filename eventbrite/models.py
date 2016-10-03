@@ -53,7 +53,7 @@ class Attendee(models.Model):
     contact = models.ForeignKey('Contact', related_name='attendees')
 
     def __str__(self):
-		return '{} {}'.format(self.contact.first_name, self.contact.last_name)
+        return '{} {}'.format(self.contact.first_name, self.contact.last_name)
 
 
 class Contact(models.Model):
@@ -79,4 +79,4 @@ class Venue(models.Model):
     latitude =  models.FloatField(blank=False)
 
     def __str__(self):
-		return self.name
+        return self.name
