@@ -14,7 +14,7 @@ class Event(models.Model):
     tags = models.CharField(max_length=30, blank=True)
     venue = models.ForeignKey('Venue', null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -32,8 +32,8 @@ class Ticket(models.Model):
     visible = models.BooleanField(blank=False)
     event = models.ForeignKey('Event', related_name='tickets')
 
-    def __unicode__(self):
-        return '%s: %s' % (self.event.title, self.name)
+    def __str__(self):
+        return '{} : {}'.format(self.event.title, self.name)
 
 
 class Attendee(models.Model):
@@ -52,14 +52,17 @@ class Attendee(models.Model):
     affiliate = models.CharField(max_length=30,)
     contact = models.ForeignKey('Contact', related_name='attendees')
 
+    def __str__(self):
+		return '{} {}'.format(self.contact.first_name, self.contact.last_name)
+
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=45, blank=False)
     last_name = models.CharField(max_length=45, blank=False)
     email = models.EmailField(primary_key=True)
 
-    def __unicode__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+    def __str__(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
 
 class Venue(models.Model):
@@ -74,3 +77,6 @@ class Venue(models.Model):
     country_code = models.CharField(max_length=5)
     longitude = models.FloatField(blank=False)
     latitude =  models.FloatField(blank=False)
+
+    def __str__(self):
+		return self.name
