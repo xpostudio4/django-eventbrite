@@ -13,13 +13,17 @@ def update_events(events=None):
             v = Venue(
                 **(event['venue'])
             )
-            v.save()
+
+        if v.postal_code == '':
+            v.postal_code = 0
+
+        v.save()
         e = Event(
             **dict(
-                (k, v) for k, v in event.iteritems() \
-                if k in set(['id', 'modified', 'privacy', 'title', 
+                (k, v) for k, v in event.items() \
+                if k in set(['id', 'modified', 'privacy', 'title',
                 'start_date', 'end_date', 'status', 'timezone', 'url', 'tags'])
-            ) 
+            )
         )
         if 'venue' in event:
             e.venue = v
@@ -28,6 +32,16 @@ def update_events(events=None):
         if 'tickets' in event:
             for ticket in event['tickets']:
                 ticket = ticket['ticket']
+
+                del ticket['min']
+                del ticket['max']
+
+                if ticket.get('include_fee', None):
+                    del ticket['include_fee']
+
+                if ticket.get('start_date', None):
+                    del ticket['start_date']
+
                 t = Ticket(event=e, **ticket)
                 t.save()
 
@@ -58,7 +72,7 @@ def update_contacts_for_event(event,attendees):
             del attendee['event_date']
         a = Attendee(ticket_id=attendee_ticket, contact=c,
             **dict(
-                (k, v) for k, v in attendee.iteritems() \
+                (k, v) for k, v in attendee.items() \
                 if k in set([
                     'amount_paid', 'barcode', 'created', 'currency',
                     'discount', 'event_date', 'id', 'modified',

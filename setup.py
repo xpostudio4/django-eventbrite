@@ -6,6 +6,10 @@ setup(
     author='Caktus Consulting Group',
     author_email='solutions@caktusgroup.com',
     packages=find_packages(),
+    install_requires=[
+        'simplejson',
+        'httplib2',
+    ],
     include_package_data=True,
     exclude_package_data={
         '': ['*.sql', '*.pyc'],
