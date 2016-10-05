@@ -21,16 +21,20 @@ class Event(models.Model):
 class Ticket(models.Model):
     currency = models.CharField(max_length=4, blank=False)
     description = models.TextField()
+    display_price = models.DecimalField(decimal_places=2, max_digits=5, blank=False)
     end_date = models.DateTimeField(blank=False)
+    event = models.ForeignKey('Event', related_name='tickets')
     id = models.PositiveIntegerField(primary_key=True)
+    include_fee = models.CharField(max_length=60)
+    max = models.IntegerField()
+    min = models.IntegerField()
     name = models.CharField(max_length=30)
     price = models.DecimalField(decimal_places=2, max_digits=5, blank=False)
-    display_price = models.DecimalField(decimal_places=2, max_digits=5, blank=False)
     quantity_available = models.PositiveIntegerField(blank=False)
     quantity_sold  = models.PositiveIntegerField(blank=False)
+    start_date = models.DateTimeField(null=True, blank=False)
     type = models.SmallIntegerField(blank=False)
     visible = models.BooleanField(blank=False)
-    event = models.ForeignKey('Event', related_name='tickets')
 
     def __str__(self):
         return '{} : {}'.format(self.event.title, self.name)

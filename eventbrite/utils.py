@@ -33,14 +33,8 @@ def update_events(events=None):
             for ticket in event['tickets']:
                 ticket = ticket['ticket']
 
-                del ticket['min']
-                del ticket['max']
-
-                if ticket.get('include_fee', None):
-                    del ticket['include_fee']
-
-                if ticket.get('start_date', None):
-                    del ticket['start_date']
+                if not ticket['max']:
+                    ticket['max'] = 0
 
                 t = Ticket(event=e, **ticket)
                 t.save()
