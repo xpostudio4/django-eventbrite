@@ -1,7 +1,13 @@
 from eventbrite.models import Event, Ticket, Attendee, Contact, Venue
 from eventbrite import API
+from django.db import connection
 from django.db.models.aggregates import Count
 api = API()
+
+
+def db_table_exists(table_name):
+    return table_name in connection.introspection.table_names()
+
 
 def update_events(events=None):
     if not events:
